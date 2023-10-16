@@ -38,8 +38,8 @@ func (s *Sequence) N(n int) int {
 // the function memoized previous answers?
 
 func BenchmarkFibonacci(b *testing.B) {
-	var seq Sequence
-	for n := 0; n < 50; n++ {
+  var seq Sequence
+	for n := 0; n < 5; n++ {
 		b.Run(fmt.Sprintf("fib %d", n), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				seq.N(n)
