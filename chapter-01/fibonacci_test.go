@@ -2,12 +2,10 @@ package fibonacci
 
 import (
 	"fmt"
-	"sync"
 	"testing"
 )
 
 type Sequence struct {
-	mu   *sync.RWMutex
 	n    int
 }
 
