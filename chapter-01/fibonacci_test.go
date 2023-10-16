@@ -8,7 +8,6 @@ import (
 
 type Sequence struct {
 	mu   *sync.RWMutex
-	memo map[int]int
 	n    int
 }
 
