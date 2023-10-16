@@ -5,6 +5,28 @@ import (
 	"testing"
 )
 
+type Sequence struct {
+	n int
+}
+func (s *Sequence) fib(n int) int {
+        switch n {
+        case 0:
+                return 0
+        case 1:
+                return 1
+        }
+        return s.fib(n-1) + s.fib(n-2)
+}
+
+func (s *Sequence) Next() int {
+	s.n++
+	return s.fib(s.n)
+}
+
+func (s *Sequence) N(n int) int {
+	return s.fib(n)
+}
+
 // Our benchmark shows that for fib(n), as n increases, so does the run time!
 //
 // This progression doesn't seem to be linear -- it seems exponential in fact.
@@ -14,8 +36,8 @@ import (
 
 
 func BenchmarkFibonacci(b *testing.B) {
-	var seq Sequence
-	for n := 0; n < 50; n++ {
+  var seq Sequence
+	for n := 0; n < 5; n++ {
 		b.Run(fmt.Sprintf("fib %d", n), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				seq.N(n)
