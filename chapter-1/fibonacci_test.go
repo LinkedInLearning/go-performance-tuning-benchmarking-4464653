@@ -3,19 +3,21 @@ package fibonacci
 import (
 	"fmt"
 	"testing"
+	"sync"
 )
 
 type Sequence struct {
+	mu *sync.Mutex
+	m map[int]int
 	n int
 }
 func (s *Sequence) fib(n int) int {
-        switch n {
-        case 0:
-                return 0
-        case 1:
-                return 1
-        }
-        return s.fib(n-1) + s.fib(n-2)
+  if v, exists := s.m[n]; exists {
+		return v
+	}
+	v := s.fib(n-1) + s.fib(n-2)
+  s.m[n] = v
+	return v
 }
 
 func (s *Sequence) Next() int {
@@ -36,7 +38,16 @@ func (s *Sequence) N(n int) int {
 
 
 func BenchmarkFibonacci(b *testing.B) {
-  var seq Sequence
+  seq := Sequence{
+    m: map[int]int {
+			0: 0,
+			1: 1,
+			2: 1,
+			3: 2,
+		},
+		mu: &sync.Mutex{},
+	}
+
 	for n := 0; n < 5; n++ {
 		b.Run(fmt.Sprintf("fib %d", n), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
