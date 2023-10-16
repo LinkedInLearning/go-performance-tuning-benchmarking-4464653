@@ -1,18 +1,20 @@
 package fibonacci
 
+import "sync"
+
 type Sequence struct {
+	mu   *sync.RWMutex
 	memo map[int]int
 	n    int
 }
 
 func (s *Sequence) fib(n int) int {
-	switch n {
-	case 0:
-		return 0
-	case 1:
-		return 1
+	if v, exists := s.memo[n]; exists {
+		return v
 	}
-	return s.fib(n-1) + s.fib(n-2)
+	v := s.fib(n-1) + s.fib(n-2)
+	s.memo[n] = v
+	return v
 }
 
 func (s *Sequence) Next() int {

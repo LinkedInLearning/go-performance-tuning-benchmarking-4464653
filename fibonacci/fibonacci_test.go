@@ -24,10 +24,14 @@ func BenchmarkFibonacci(b *testing.B) {
 
 func TestFibonacci(t *testing.T) {
 	fibonacci := []int{0, 1, 1, 2, 3, 5, 8, 13, 21}
+
 	var seq Sequence
+
 	for i := 0; i < len(fibonacci); i++ {
-		if got, expected := seq.N(i), fibonacci[i]; got != expected {
-			t.Fatalf("expected fib(%d) to be %d; got %d", i, expected, got)
-		}
+		t.Run(fmt.Sprintf("fib %d", i), func(t *testing.T) {
+			if got, expected := seq.N(i), fibonacci[i]; got != expected {
+				t.Fatalf("expected fib(%d) to be %d; got %d", i, expected, got)
+			}
+		})
 	}
 }
