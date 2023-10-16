@@ -10,7 +10,9 @@ import (
 // This progression doesn't seem to be linear -- it seems exponential in fact.
 //
 // Can we modify the Sequence type to improve performance?  Would it help if
-// the function memoized previous ansers?
+// the function memoized previous answers?
+
+
 func BenchmarkFibonacci(b *testing.B) {
 	var seq Sequence
 	for n := 0; n < 50; n++ {

@@ -1,6 +1,10 @@
 package fibonacci
 
+import "sync"
+
 type Sequence struct {
+	mu *sync.RWMutex
+	memo map[int]int
 	n int
 }
 
