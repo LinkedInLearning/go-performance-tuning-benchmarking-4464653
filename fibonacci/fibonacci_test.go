@@ -2,8 +2,34 @@ package fibonacci
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 )
+
+type Sequence struct {
+	mu   *sync.RWMutex
+	memo map[int]int
+	n    int
+}
+
+func (s *Sequence) fib(n int) int {
+	switch n {
+	case 0:
+		return 0
+	case 1:
+		return 1
+	}
+	return s.fib(n-1) + s.fib(n-2)
+}
+
+func (s *Sequence) Next() int {
+	s.n++
+	return s.fib(s.n)
+}
+
+func (s *Sequence) N(n int) int {
+	return s.fib(n)
+}
 
 // Our benchmark shows that for fib(n), as n increases, so does the run time!
 //
@@ -11,7 +37,6 @@ import (
 //
 // Can we modify the Sequence type to improve performance?  Would it help if
 // the function memoized previous answers?
-
 
 func BenchmarkFibonacci(b *testing.B) {
 	var seq Sequence
