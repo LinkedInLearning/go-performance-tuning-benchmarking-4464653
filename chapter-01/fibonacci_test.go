@@ -3,20 +3,22 @@ package fibonacci
 import (
 	"fmt"
 	"testing"
+	"sync"
 )
 
 type Sequence struct {
+	memo map[int]int
+	mu *sync.RWMutex
 	n    int
 }
 
 func (s *Sequence) fib(n int) int {
-	switch n {
-	case 0:
-		return 0
-	case 1:
-		return 1
+  if v, exists := s.memo[n]; exists {
+		return v
 	}
-	return s.fib(n-1) + s.fib(n-2)
+	v := s.fib(n-1) + s.fib(n-2)
+  s.memo[n] = v
+	return v
 }
 
 func (s *Sequence) Next() int {
@@ -36,7 +38,15 @@ func (s *Sequence) N(n int) int {
 // the function memoized previous answers?
 
 func BenchmarkFibonacci(b *testing.B) {
-  var seq Sequence
+  seq := Sequence{
+		mu: &sync.RWMutex{},
+		memo: map[int]int{
+			0: 0,
+			1: 1,
+			2: 1,
+			3: 2,
+		},
+	}
 	for n := 0; n < 5; n++ {
 		b.Run(fmt.Sprintf("fib %d", n), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
@@ -49,8 +59,16 @@ func BenchmarkFibonacci(b *testing.B) {
 func TestFibonacci(t *testing.T) {
 	fibonacci := []int{0, 1, 1, 2, 3, 5, 8, 13, 21}
 
-	var seq Sequence
-
+	seq := Sequence{
+		mu: &sync.RWMutex{},
+		memo: map[int]int{
+			0: 0,
+			1: 1,
+			2: 1,
+			3: 2,
+		},
+	}
+	
 	for i := 0; i < len(fibonacci); i++ {
 		t.Run(fmt.Sprintf("fib %d", i), func(t *testing.T) {
 			if got, expected := seq.N(i), fibonacci[i]; got != expected {
