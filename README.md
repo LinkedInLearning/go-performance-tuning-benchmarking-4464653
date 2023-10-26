@@ -1,5 +1,3 @@
-![benchmark drawing](benchmark.svg)
-
 # Go Peformance Tuning: Benchmarking
 
 This is the repository for the LinkedIn Learning course `Go Performancing Tuning: Benchmarking`. The full course is available from [LinkedIn Learning][lil-course-url].
