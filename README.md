@@ -18,9 +18,15 @@ This repository has directories for each of the videos in the course.  You can f
     - Go version 1.18 or later
 2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
 
+### Instructor
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+[Ayan George](https://www.linkedin.com/learning/instructors/ayan-george)
 
-[lil-course-url]: https://www.linkedin.com/learning/
+
+_Go Enthusiast_
+
+
+
+[lil-course-url]: https://www.linkedin.com/learning/go-performance-tuning-and-benchmarking
 [lil-thumbnail-url]: https://media.licdn.com/dms/image/D4D0DAQESHLdTAoZ2sg/learning-public-crop_675_1200/0/1702672754400?e=2147483647&v=beta&t=oEaHmhENLj6tLa4nqLrPZERNVi_Bd2B5375trBfSXko
 
